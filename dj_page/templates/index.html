@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% load staticfiles %}
+{% load pagination_tags %}
+<body>
+{% autopaginate userlist 10 %}
+
+<table border="1">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="all">全选</th>
+        <th>id</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>邮箱</th>
+        <th>电话</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="tb">
+    {% for user in userlist %}
+        <tr>
+            <td><input type="checkbox" name="id" value="{{ user.id }}" onclick="userCheck(this)"></td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.UserName }}</td>
+            <td>{{ user.UserPwd }}</td>
+            <td>{{ user.UserEmail }}</td>
+            <td>{{ user.Phone }}</td>
+            <td>
+                <img id="update" src="/static/img/edit-new.png" onclick="userupdate({{ user.id }})">
+                <img id="delete" src="/static/img/edit_remove.png" onclick="userdelete({{ user.id }})">
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% paginate %}
+<button id="dedSelect">刪除选中</button>
+</body>
+<script type="text/javascript" src="{% static "../static/js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "../static/js/usermanage.js" %}"></script>
+<script type="text/javascript" src="{% static "../static/js/csrf.js" %}"></script>
+
+</html>
